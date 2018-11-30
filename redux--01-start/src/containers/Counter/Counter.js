@@ -1,3 +1,5 @@
+//here is the main logic of the counter
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import CounterControl from '../../components/CounterControl/CounterControl';
@@ -28,8 +30,8 @@ class Counter extends Component {
     render () {
         return (
             <div>
-                <CounterOutput value={this.state.counter} />
-                <CounterControl label="Increment" clicked={() => this.counterChangedHandler( 'inc' )} />
+                <CounterOutput value={this.props.ctr} /> 
+                <CounterControl label="Increment" clicked={this.props.onIncrementCounter} />
                 <CounterControl label="Decrement" clicked={() => this.counterChangedHandler( 'dec' )}  />
                 <CounterControl label="Add 5" clicked={() => this.counterChangedHandler( 'add', 5 )}  />
                 <CounterControl label="Subtract 5" clicked={() => this.counterChangedHandler( 'sub', 5 )}  />
@@ -42,4 +44,12 @@ const mapStateToProps = state => {
         ctr: state.counter
     };
 };
-export default connect(mapStateToProps)(Counter);
+
+const mapDispatchToProps = dispatch => {
+    return{
+        onIncrementCounter: () => dispatch({type: 'INCREMENT'})
+    };
+};
+
+
+export default connect( mapStateToProps, mapDispatchToProps)(Counter);
